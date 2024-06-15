@@ -1,0 +1,31 @@
+{
+  "name": "satori-plugin-symri",
+  "version": "0.0.1",
+  "packageManager": "yarn@4.2.1",
+  "description": "",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "atsc -b"
+  },
+  "keywords": [
+    "cordis",
+    "plugin"
+  ],
+  "peerDependencies": {
+    "@satorijs/core": "^4.1.0"
+  },
+  "devDependencies": {
+    "@satorijs/core": "^4.1.0",
+    "@tsconfig/strictest": "^2.0.5",
+    "atsc": "^1.2.2",
+    "concurrently": "^8.2.2",
+    "cordis": "^3.15.3",
+    "ts-toolbelt": "^9.6.0",
+    "typescript": "^5.4.5"
+  }
+}
