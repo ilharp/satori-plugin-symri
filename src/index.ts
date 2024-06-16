@@ -59,26 +59,59 @@ const handleAuth = (config: Config) => (c: C, next: Next) => {
   return next()
 }
 
-const handleContactList = (ctx: Context) => async (c: C) => {
-  c.body = (
-    await Promise.allSettled(
-      ctx.bots.map(async (bot) => ({
-        bot,
-        list: await bot.getGuildList(),
-      })),
-    )
-  ).flatMap((x) => {
-    if (x.status === 'rejected') return []
-    const bot = x.value.bot
-    return x.value.list.data.map((guild) => ({
-      ...guild,
-      platform: bot.platform,
-      selfId: bot.selfId,
-      type: bot.features.includes('guild.plain')
-        ? Channel.Type.TEXT
-        : Channel.Type.CATEGORY,
-    }))
-  })
+export interface Contact {
+  id: string
+  name?: string
+  avatar?: string
+  platform: string
+  logins: {
+    selfId: string
+  }[]
+  type: Channel.Type
+}
 
+const handleContactList = (ctx: Context) => async (c: C) => {
+  const result: Record<string, Contact> = {}
+
+  const guildLists = await Promise.allSettled(
+    ctx.bots.map(async (bot) => ({
+      bot,
+      list: await bot.getGuildList(),
+    })),
+  )
+
+  for (const guildList of guildLists) {
+    if (guildList.status === 'rejected') continue
+
+    const { bot, list } = guildList.value
+
+    for (const guild of list.data) {
+      const key = `${bot.platform}:${guild.id}`
+      result[key] ||= {
+        logins: [],
+      } as unknown as Contact
+      const contact = result[key]!
+
+      Object.assign(contact, guild)
+
+      // Modify contact
+      contact.platform = bot.platform
+      contact.type = bot.features.includes('guild.plain')
+        ? Channel.Type.TEXT
+        : Channel.Type.CATEGORY
+
+      let login = contact.logins.find((x) => x.selfId === bot.selfId)
+      if (!login) {
+        login = {
+          selfId: bot.selfId,
+        }
+        contact.logins.push(login)
+      }
+
+      // Modify login
+    }
+  }
+
+  c.body = Object.values(result)
   c.status = 200
 }
