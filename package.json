@@ -21,6 +21,7 @@
     "@satorijs/protocol": "^1.4.0"
   },
   "devDependencies": {
+    "@cordisjs/plugin-server": "^0.2.2",
     "@satorijs/core": "^4.1.0",
     "@satorijs/protocol": "^1.4.0",
     "@tsconfig/strictest": "^2.0.5",
