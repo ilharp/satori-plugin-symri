@@ -17,7 +17,8 @@
     "plugin"
   ],
   "peerDependencies": {
-    "@satorijs/core": "^4.1.0"
+    "@satorijs/core": "^4.1.0",
+    "@satorijs/protocol": "^1.4.0"
   },
   "devDependencies": {
     "@satorijs/core": "^4.1.0",
