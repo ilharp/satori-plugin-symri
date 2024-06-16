@@ -103,7 +103,7 @@ const handleContactList = (ctx: Context) => async (c: C) => {
       let login = contact.logins.find((x) => x.selfId === bot.selfId)
       if (!login) {
         login = {
-          selfId: bot.selfId,
+          self_id: bot.selfId,
         }
         contact.logins.push(login)
       }
