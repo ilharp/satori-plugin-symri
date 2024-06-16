@@ -12,6 +12,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "moduleResolution": "bundler",
+    "isolatedModules": false,
     "types": [
       "node",
       "yml-register/types",
