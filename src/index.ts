@@ -65,7 +65,7 @@ export interface Contact {
   avatar?: string
   platform: string
   logins: {
-    selfId: string
+    self_id: string
   }[]
   type: Channel.Type
 }
@@ -100,7 +100,7 @@ const handleContactList = (ctx: Context) => async (c: C) => {
         ? Channel.Type.TEXT
         : Channel.Type.CATEGORY
 
-      let login = contact.logins.find((x) => x.selfId === bot.selfId)
+      let login = contact.logins.find((x) => x.self_id === bot.selfId)
       if (!login) {
         login = {
           self_id: bot.selfId,
